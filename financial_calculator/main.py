@@ -22,8 +22,12 @@
 # print(compound_interest())
 
 allocator_categories = []
+allocator_budget = int(input('How much money would you like to allocate?: '))
+categories = 0
+final_list = []
 
 while True:
+    categories += 1
     allocator_add = input('What category would you like to add to the different categories you will put your money in?: ').lower()
     allocator_categories.append(allocator_add)
 
@@ -33,4 +37,11 @@ while True:
     elif keep_going == 'no':
         break
     else:
-        continue
+        print('Incorrect option. I will assume that you are done.')
+        break
+
+num = 0
+for allocator_categories in range(categories):
+    category = allocator_categories[num]
+    percent = int(input(f'What percent of money would you like to put into {category}'))
+    num += 1
