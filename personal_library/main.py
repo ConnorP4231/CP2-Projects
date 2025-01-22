@@ -59,18 +59,29 @@ def remove_artist(artists=artists):
     
 
 def main():
-    options = input("""
+    while True:
+        options = input("""
 Options: 
 
 1. Add an artist
 2. Remove an artist
 3. Search for an artist
+4. Exit the program
 
-Which one would you like to do? (1, 2, or 3): """)
+Which one would you like to do? (1, 2, 3, or 4): """)
 
-    if options == 1:
-        add_artist()
-    elif options == 2
+        if options == '1':
+            add_artist()
+        elif options == '2':
+            remove_artist()
+        elif options == '3':
+            search()
+        elif options == '4':
+            print('Thanks for using the program!')
+            break
+        else:
+            print('Incorrect option, try again.')
+            continue
 
 
 main()
