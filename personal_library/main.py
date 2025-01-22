@@ -5,6 +5,9 @@
 # Have users remove different music artists
 # Have users search for artists by genre or name
 
+print("""This is a program where you can add and remove artists to a list. You can also search for them too.
+Currently the list is empty, so do whatever you want.""") #This tells the user what the program is and what they can do.
+
 artists = [] # The main list that stores the artists
 
 def add_artist(artists=artists): # The function that adds an artist to the list
@@ -20,7 +23,7 @@ def search(artists=artists): #This is the function to search for the artists.
     search = input('Enter an artist/genre to search for: ')
 
     for x in artists: #Goes through each value of the artist list and if it is equal to the search then it puts it into a new list.
-        if search in x:
+        if search.lower() in x.lower():
             search_list.append(x)
     
     if not search_list:
