@@ -73,7 +73,7 @@ Options:
 4. Look at the artist list
 5. Exit the program
 
-Which one would you like to do? (1, 2, 3, or 4): """)
+Which one would you like to do? (1, 2, 3, 4, or 5): """)
 
         if options == '1':
             add_artist()
