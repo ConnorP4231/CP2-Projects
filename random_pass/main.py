@@ -1,87 +1,111 @@
-# Connor Pavicic, random_pass
+import random #Gets random
 
-# What this program will do:
-# Have users choose what they need in their password
-# Have users choose how many of that thing will be in their password
-# Arrange those things so that it sort of looks like
-
-import random
-
-pass_length = int(input('How many characters do you want your password to be?: '))
-password = []
-
+# Gets the password length from the user
 while True:
-    num_upper = int(input('How many upper case letters do you want?: '))
-    if num_upper>pass_length:
-        print(f'You can not have {num_upper} letters in a {pass_length} character long password.')
-    else:
+    try:
+        pass_length = int(input('How many characters do you want your password to be?: '))
         break
-
-while True:
-    num_lower = int(input('How many lower case letters do you want?: '))
-    if num_lower + num_upper>pass_length:
-        print(f'Too many characters to fit in a {pass_length} character long password.')
-    else:
-        break
-
-while True:
-    num_num = int(input('How many numbers do you want?: '))
-    if num_num + num_lower + num_upper>pass_length:
-        print(f'Too many characters to fit in a {pass_length} character long password.')
-    else:
-        break
-
-while True:
-    special_num = int(input('How many special characters do you want?: '))
-    if special_num+num_num + num_lower + num_upper>pass_length:
-        print(f'Too many characters to fit in a {pass_length} character long password.')
-    else:
-        break
-
-def upper_case(password = password, num_upper = num_upper):
-    letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-    for letter in range(num_upper):
-        letter = random.choice(letters)
-        password.append(letter)
+    except ValueError: #makes sure that it is an int.
+        print('That is not a correct input. Please enter a valid integer.')
 
 
+# Collects user inputs for character counts
+def get_user_inputs(pass_length):
+    while True:
+        try:
+            num_upper = int(input('How many upper case letters do you want?: '))
+            if num_upper > pass_length:
+                print(f'You cannot have {num_upper} letters in a {pass_length}-character long password.') #makes sure it isn't longer than password length (same with all the others.)
+            else:
+                break
+        except ValueError: #makes sure it is an int (same with all the others)
+            print('That is not a correct input. Please enter a valid integer.')
 
-def lower_case(password = password, num_lower = num_lower):
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    for letter in range(num_lower):
-        letter = random.choice(letters)
-        password.append(letter)
+    while True:
+        try:
+            num_lower = int(input('How many lower case letters do you want?: '))
+            if num_upper + num_lower > pass_length:
+                print(f'Too many characters to fit in a {pass_length}-character long password.')
+            else:
+                break
+        except ValueError:
+            print('That is not a correct input. Please enter a valid integer.')
+
+    while True:
+        try:
+            num_num = int(input('How many numbers do you want?: '))
+            if num_upper + num_lower + num_num > pass_length:
+                print(f'Too many characters to fit in a {pass_length}-character long password.')
+            else:
+                break
+        except ValueError:
+            print('That is not a correct input. Please enter a valid integer.')
+
+    while True:
+        try:
+            special_num = int(input('How many special characters do you want?: '))
+            if num_upper + num_lower + num_num + special_num > pass_length:
+                print(f'Too many characters to fit in a {pass_length}-character long password.')
+            else:
+                break
+        except ValueError:
+            print('That is not a correct input. Please enter a valid integer.')
+
+    return num_upper, num_lower, num_num, special_num #returns all the values to be used later
 
 
-def number(password=password, num_num = num_num):
-    numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    for number in range(num_num):
-        number = random.choice(numbers)
-        password.append(number)
+# Generates x amount of random uppercase letters
+def upper_case(password, num_upper):
+    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for _ in range(num_upper):
+        password.append(random.choice(letters))
+
+# Generates x amount of lowercase letters
+def lower_case(password, num_lower):
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    for _ in range(num_lower):
+        password.append(random.choice(letters))
+
+# Generates x amount of numbers
+def numbers(password, num_num):
+    digits = '0123456789'
+    for _ in range(num_num):
+        password.append(random.choice(digits))
+
+# Generates x amount of special characters
+def special_character(password, special_num):
+    special_chars = '!@#$%^&*'
+    for _ in range(special_num):
+        password.append(random.choice(special_chars))
+
+# Makes sure the password meets length requirements
+def fill(password, pass_length):
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    for _ in range(pass_length - len(password)):
+        password.append(random.choice(letters))
 
 
-def special_character(password = password, special_num = special_num):
-    characters = ['!', '@', '#', '$', '%', '^', '&', '*']
-    for char in range(special_num):
-        char = random.choice(characters)
-        password.append(char)
+# Main function that makes the password
+def generate_password(pass_length, num_upper, num_lower, num_num, special_num):
+    password = []
+    # The function calls with each parameter set up.
+    upper_case(password, num_upper)
+    lower_case(password, num_lower)
+    numbers(password, num_num)
+    special_character(password, special_num)
+
+    # Runs the filler function if length requirements aren't met.
+    if len(password) < pass_length:
+        fill(password, pass_length)
+
+    #Shuffles the password in a random order
+    random.shuffle(password)
+    return ''.join(password) #Returns it
 
 
-def fill(password = password):
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    for letter in range(pass_length-len(password)):
-        letter = random.choice(letters)
-        password.insert(0, letter)
+#Gets 4 different outputs for the same requirements and prints them.
+num_upper, num_lower, num_num, special_num = get_user_inputs(pass_length)
 
-def main(password = password):
-    upper_case()
-    lower_case()
-    special_character()
-    number()
-    password = ' '.join(password)
-    final_pass = password.replace(' ', '')
-    if special_num+num_num + num_lower + num_upper>pass_length < pass_length:
-        fill()
-    print(final_pass)
-
-main()
+print("\nHere are your generated passwords:")
+for i in range(4):
+    print(f"Password {i + 1}: {generate_password(pass_length, num_upper, num_lower, num_num, special_num)}")
