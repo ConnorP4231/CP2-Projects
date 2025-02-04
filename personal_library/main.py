@@ -8,14 +8,14 @@
 print("""This is a program where you can add and remove artists to a list. You can also search for them too.
 Currently the list is empty, so do whatever you want.""") #This tells the user what the program is and what they can do.
 
-artists = [] # The main list that stores the artists
+artists = [] # The main set that stores the artists
 
 def add_artist(artists=artists): # The function that adds an artist to the list
+    artist_dict = {}
     artist = input('Enter an artist: ').lower()
     genre = input('Enter a genre: ').lower()
-    artist_bio = ('Artist:', artist, ', Genre:', genre) #This is the tuple that I used.
-    artist_bio = ' '.join(artist_bio)
-    artists.append(artist_bio)
+    artist_dict[artist] = genre
+    artists.append(artist_dict)
     print('Artist added!')
 
 def search(artists=artists): #This is the function to search for the artists.
