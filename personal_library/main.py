@@ -1,82 +1,62 @@
 # Connor Pavicic, personal_library
 
-# What the program will do:
-# Have users add different music artists to the set
-# Have users remove different music artists
-# Have users search for artists by genre or name
-
 print("""This is a program where you can add and remove artists to a list. You can also search for them too.
-Currently the list is empty, so do whatever you want.""") #This tells the user what the program is and what they can do.
+Currently, the list is empty, so do whatever you want.""")
 
-artists = [] # The main set that stores the artists
+artists = {}  # Use a dictionary instead of a list
 
-def add_artist(artists=artists): # The function that adds an artist to the list
-    artist_dict = {}
-    artist = input('Enter an artist: ').lower()
-    genre = input('Enter a genre: ').lower()
-    artist_dict[artist] = genre
-    artists.append(artist_dict)
-    print('Artist added!')
-
-def search(artists=artists): #This is the function to search for the artists.
-    search_list = {} # The set I used.
-    search = input('Enter an artist/genre to search for: ')
-
-    for x in artists: #Goes through each value of the artist list and if it is equal to the search then it puts it into a new list.
-        if search.lower() in x:
-            search_list.add(x)
+def add_artist(): #Function to add artists
+    artist = input('Enter an artist: ').strip().lower()
+    genre = input('Enter a genre: ').strip().lower()
     
-    if not search_list:
-        print('Artist/Genre not found.')
-    elif search_list:
-        print(search_list)
-
-def remove_artist(artists=artists): #This is the function to remove an artist.
-    remove = input('Enter an artist that you would like to remove from the list (you can search their genre to identify them): ').lower()
-
-    
-    remove_list = [x for x in artists if remove in x.lower()] # A little bit different style of code since I have to remove the artist.
-
-    if not remove_list:
-        print('Artist/Genre not found.')
-        return
-
-    # If their search pulls up multiple artists: 
-    while len(remove_list) > 1:
-        print(f'Multiple matches found: {remove_list}')
-        remove_again = input('Please specify the exact artist you want to remove: ').lower()
-        remove_list = [x for x in remove_list if remove_again in x.lower()]
-
-        if not remove_list:
-            print('No matches found for your input. Exiting removal process.')
-            return
-
-    
-    artist_to_remove = remove_list[0]
-    are_you_sure = input(f'Are you sure that you want to remove this artist: "{artist_to_remove}"? (yes/no): ').lower() #Makes sure the user actually wants to remove the specified artist.
-
-    if are_you_sure == 'yes':
-        artists.remove(artist_to_remove)
-        print('Artist deleted.')
-    elif are_you_sure == 'no':
-        print('Operation canceled. The artist was not removed.')
+    if artist in artists: #Makes sure that this is a new artist.
+        print(f"{artist.title()} is already in the library under {artists[artist].title()}.")
     else:
-        print('Invalid option. The artist is still in the list.')
+        artists[artist] = genre #Else it just puts it in a dictionary.
+        print(f'Artist "{artist.title()}" added under the genre "{genre.title()}".')
 
-    
+def search(): #The function that searches for artists.
+    search_term = input('Enter an artist or genre to search for: ').strip().lower()
+    matches = {artist: genre for artist, genre in artists.items() if search_term in artist or search_term in genre} #Goes through the dictionary to find something = to the search.
 
-def main(): #The main function that runs all the other functions based off what the user wants.
+    if not matches: #If no matches are found
+        print('Artist/Genre not found.')
+    else:
+        print("Search results:")
+        for artist, genre in matches.items(): #Goes through to print the found items.
+            print(f"{artist.title()} - {genre.title()}")
+
+def remove_artist(): #The function that removes artists.
+    remove_artist = input('Enter the artist you want to remove: ').strip().lower()
+
+    # Finds artist in dictionary
+    artist_found = None
+    for artist in artists.keys():
+        if artist.lower() == remove_artist:  # Match the lowercase version
+            artist_found = artist
+            break
+
+    if artist_found:
+        confirm = input(f'Are you sure you want to remove "{artist_found.title()}"? (yes/no): ').strip().lower()
+        if confirm == 'yes':
+            del artists[artist_found] #Deletes the artist
+            print(f'Artist "{artist_found.title()}" deleted.')
+        else:
+            print('Operation canceled.') #If they chose to not, then it just prints this.
+    else: #If the artist isn't found:
+        print('Artist not found.')
+
+def main(): #The main function that asks the user what they want to do.
     while True:
         options = input("""
 Options: 
-
 1. Add an artist
 2. Remove an artist
 3. Search for an artist
-4. Look at the artist list
+4. Show artist list
 5. Exit the program
 
-Which one would you like to do? (1, 2, 3, 4, or 5): """)
+Choose an option (1, 2, 3, 4, or 5): """).strip()
 
         if options == '1':
             add_artist()
@@ -84,14 +64,17 @@ Which one would you like to do? (1, 2, 3, 4, or 5): """)
             remove_artist()
         elif options == '3':
             search()
-        elif options == '4': #They can look at their artist list.
-            print(artists)
-        elif options == '5': #They can exit the program
+        elif options == '4':
+            if artists: #Prints the artist list.
+                print("\nCurrent Artist List:")
+                for artist, genre in artists.items():
+                    print(f"{artist.title()} - {genre.title()}")
+            else:
+                print("The artist list is currently empty.")
+        elif options == '5':
             print('Thanks for using the program!')
             break
-        else:
-            print('Incorrect option, try again.')
-            continue
-
+        else: #Makes sure the user types a correct input in.
+            print('Invalid option, try again.')
 
 main()
