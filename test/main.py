@@ -1,78 +1,80 @@
-# Connor Pavicic, morse_code_translator
+# Connor Pavicic, personal_library
 
-# list of letters
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
-           'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 
-           'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', 
-           '4', '5', '6', '7', '8', '9']
+print("""This is a program where you can add and remove artists to a list. You can also search for them too.
+Currently, the list is empty, so do whatever you want.""")
 
-# list of morse code characters
-morse_codes = [
-    '.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---', 
-    '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-', 
-    '..-', '...-', '.--', '-..-', '-.--', '--..',
-    '-----', '.----', '..---', '...--', '....-', '.....', '-....', '--...', '---..', '----.'
-]
+artists = {}  # Use a dictionary instead of a list
 
-def english_to_morse(): # The function that changes english to morse code
-    valid = False
-    valid_chars = letters + [' ']
-    while not valid:
-        to_be_translated = input('What do you want to translate into morse code?: ').lower()
-        if all(char in valid_chars for char in to_be_translated):
-            valid = True
+def add_artist():
+    artist = input('Enter an artist: ').strip().lower()
+    genre = input('Enter a genre: ').strip().lower()
+    
+    if artist in artists:
+        print(f"{artist.title()} is already in the library under {artists[artist].title()}.")
+    else:
+        artists[artist] = genre
+        print(f'Artist "{artist.title()}" added under the genre "{genre.title()}".')
+
+def search():
+    search_term = input('Enter an artist or genre to search for: ').strip().lower()
+    matches = {artist: genre for artist, genre in artists.items() if search_term in artist or search_term in genre}
+
+    if not matches:
+        print('Artist/Genre not found.')
+    else:
+        print("Search results:")
+        for artist, genre in matches.items():
+            print(f"{artist.title()} - {genre.title()}")
+
+def remove_artist():
+    remove_artist = input('Enter the artist you want to remove: ').strip().lower()  # Normalize input
+
+    # Find artist in the dictionary with case-insensitive matching
+    artist_found = None
+    for artist in artists.keys():
+        if artist.lower() == remove_artist:  # Match the lowercase version
+            artist_found = artist
+            break
+
+    if artist_found:
+        confirm = input(f'Are you sure you want to remove "{artist_found.title()}"? (yes/no): ').strip().lower()
+        if confirm == 'yes':
+            del artists[artist_found]
+            print(f'Artist "{artist_found.title()}" deleted.')
         else:
-            print('Invalid characters found, try again.') #makes sure that the user input is valid.
-    
-    final_translation = ''
-    
-    for char in to_be_translated: #goes through each character in the list and then finds the index and takes the index in the morse code then adds it to a string.
-        if char in letters:
-            final_translation += morse_codes[letters.index(char)] + ' '
-        elif char == ' ':
-            final_translation += '/ '
-    
-    print(final_translation)
+            print('Operation canceled.')
+    else:
+        print('Artist not found.')
 
-def morse_to_english(): #Function for morse code to English.
-    valid = False
-    valid_chars = ['.', '-', '/', ' ']
-    while not valid:
-        to_be_translated = input('What do you want to translate into English?: ')
-        if all(char in valid_chars for char in to_be_translated):
-            valid = True
-        else:
-            print('Invalid characters found, try again.') #makes sure the user is inputting something correct.
-    
-    final_translation = ''
-    words = to_be_translated.split(' / ')
-    
-    for word in words: #does the same thing as the other function but the other way around.
-        chars = word.split()
-        for char in chars:
-            if char in morse_codes:
-                final_translation += letters[morse_codes.index(char)]
-        final_translation += ' '
-    
-    print(final_translation.strip())
-
-def main(): #the main function that runs everything.
+def main():
     while True:
         options = input("""
-1: English to morse code
-2: Morse code to English
-3: Exit the program
-                        
-(1, 2, or 3): """)
-        
+Options: 
+1. Add an artist
+2. Remove an artist
+3. Search for an artist
+4. Show artist list
+5. Exit the program
+
+Choose an option (1, 2, 3, 4, or 5): """).strip()
+
         if options == '1':
-            english_to_morse()
+            add_artist()
         elif options == '2':
-            morse_to_english()
+            remove_artist()
         elif options == '3':
-            print('Thanks for using the program.')
+            search()
+        elif options == '4':
+            if artists:
+                print("\nCurrent Artist List:")
+                for artist, genre in artists.items():
+                    print(f"{artist.title()} - {genre.title()}")
+            else:
+                print("The artist list is currently empty.")
+        elif options == '5':
+            print('Thanks for using the program!')
             break
         else:
-            print('Incorrect option, try again.')
+            print('Invalid option, try again.')
 
 main()

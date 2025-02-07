@@ -19,7 +19,7 @@ def add_artist(artists=artists): # The function that adds an artist to the list
     print('Artist added!')
 
 def search(artists=artists): #This is the function to search for the artists.
-    search_list = {}
+    search_list = {} # The set I used.
     search = input('Enter an artist/genre to search for: ')
 
     for x in artists: #Goes through each value of the artist list and if it is equal to the search then it puts it into a new list.
