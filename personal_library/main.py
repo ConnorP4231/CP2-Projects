@@ -1,4 +1,4 @@
-from datetime import datetime #Tracks the date and time
+from datetime import datetime
 
 # Connor Pavicic, personal_library
 
@@ -10,14 +10,23 @@ artists = {}  # Use a dictionary instead of a list
 def add_artist():  # Function to add artists
     artist = input('Enter an artist: ').strip().lower()
     genre = input('Enter a genre: ').strip().lower()
-    date_added = datetime.now().strftime("%Y-%m-%d") #Gets the date
-    time_added = datetime.now().strftime("%H:%M:%S") #Gets the time
+    date_added = datetime.now().strftime("%Y-%m-%d")
+    time_added = datetime.now().strftime("%H:%M:%S")
+    while True:
+        try:
+            rating = float(input('Rate the artist out of 10: ').strip())
+            if 0 <= rating <= 10:
+                break
+            else:
+                print("Please enter a rating between 0 and 10.")
+        except ValueError:
+            print("Invalid input. Please enter a numerical value between 0 and 10.")
     
     if artist in artists:  # Makes sure that this is a new artist.
         print(f"{artist.title()} is already in the library under {artists[artist]['genre'].title()}.")
     else:
-        artists[artist] = {"genre": genre, "date_added": date_added, "time_added": time_added}  # Stores artist with genre, date, and time
-        print(f'Artist "{artist.title()}" added under the genre "{genre.title()}" on {date_added} at {time_added}.')
+        artists[artist] = {"genre": genre, "date_added": date_added, "time_added": time_added, "rating": rating}  # Stores artist with genre, date, time, and rating
+        print(f'Artist "{artist.title()}" added under the genre "{genre.title()}" on {date_added} at {time_added} with a rating of {rating}/10.')
 
 def search():  # The function that searches for artists.
     search_term = input('Enter an artist or genre to search for: ').strip().lower()
@@ -28,7 +37,7 @@ def search():  # The function that searches for artists.
     else:
         print("Search results:")
         for artist, info in matches.items():  # Prints the found items.
-            print(f"{artist.title()} - {info['genre'].title()} (Added on {info['date_added']} at {info['time_added']})")
+            print(f"{artist.title()} - {info['genre'].title()} (Added on {info['date_added']} at {info['time_added']}) - Rating: {info['rating']}/10")
 
 def remove_artist():  # The function that removes artists.
     remove_artist = input('Enter the artist you want to remove: ').strip().lower()
@@ -72,7 +81,7 @@ Choose an option (1, 2, 3, 4, or 5): """).strip()
             if artists:  # Prints the artist list.
                 print("\nCurrent Artist List:")
                 for artist, info in artists.items():
-                    print(f"{artist.title()} - {info['genre'].title()} (Added on {info['date_added']} at {info['time_added']})")
+                    print(f"{artist.title()} - {info['genre'].title()} (Added on {info['date_added']} at {info['time_added']}) - Rating: {info['rating']}/10")
             else:
                 print("The artist list is currently empty.")
         elif options == '5':
