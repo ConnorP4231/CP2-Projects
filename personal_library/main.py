@@ -59,7 +59,7 @@ def remove_artist():  # The function that removes artists.
     else:  # If the artist isn't found:
         print('Artist not found.')
 
-def main():  # The main function that asks the user what they want to do.
+def main(artists=artists):  # The main function that asks the user what they want to do.
     while True:
         options = input("""
 Options: 
@@ -79,9 +79,7 @@ Choose an option (1, 2, 3, 4, or 5): """).strip()
             search()
         elif options == '4':
             if artists:  # Prints the artist list.
-                print("\nCurrent Artist List:")
-                for artist, info in artists.items():
-                    print(f"{artist.title()} - {info['genre'].title()} (Added on {info['date_added']} at {info['time_added']}) - Rating: {info['rating']}/10")
+                print(artists)
             else:
                 print("The artist list is currently empty.")
         elif options == '5':
