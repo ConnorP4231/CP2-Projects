@@ -12,7 +12,7 @@ def add_item():
     with open("to_do_list/main.txt", "a", newline="") as file:
         task = input('What task do you need to do?: ')
         to_be_appended = task + ": Not done yet."
-        file.write("\n"+to_be_appended)
+        file.write(f"\n {to_be_appended}")
 
 def replace():
     with open("to_do_list/main.txt", "r+") as file:
@@ -23,7 +23,7 @@ def replace():
         n = 0
         for i in main_txt:
             if to_be_replaced in i:
-                confirm = input(f'Are you sure you want to replace {i} with {to_be_replaced_with}? (yes or no)').lower().strip()
+                confirm = input(f'Are you sure you want to replace {i} with {to_be_replaced_with}? (yes or no): ').lower().strip()
                 if confirm == 'yes':
                     replacement = i.replace(to_be_replaced, to_be_replaced_with)
 
