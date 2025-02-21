@@ -7,39 +7,36 @@ Add items to the to do list
 Mark item as complete
 Delete item from to do list"""
 
+with open("to_do_list/main.txt", "w", newline="") as file:
+    file.write("")
 
 def add_item():
     with open("to_do_list/main.txt", "a", newline="") as file:
         task = input('What task do you need to do?: ')
         to_be_appended = task + ": Not done yet."
-        file.write(f"\n {to_be_appended}")
+        file.write(f"\n{to_be_appended}")
 
-def replace():
-    with open("to_do_list/main.txt", "r+") as file:
-        main_txt = file.readlines()
-        to_be_replaced = input('What text do you want to replace?: ')
-        to_be_replaced_with = input(f'What do you want to replace {to_be_replaced} with?: ')
-
-        n = 0
-        for i in main_txt:
-            if to_be_replaced in i:
-                confirm = input(f'Are you sure you want to replace {i} with {to_be_replaced_with}? (yes or no): ').lower().strip()
-                if confirm == 'yes':
-                    replacement = i.replace(to_be_replaced, to_be_replaced_with)
-
-                    main_txt[n] = replacement
-                elif confirm == 'no':
-                    break
-                else:
-                    print('Incorrect option, exiting the replace feature.')
-                    break
-            n += 1
-
-replace()
-
-    
+add_item()
 
 with open("to_do_list/main.txt", "r", newline="") as file:
     contents = file.read()
+    print(contents)
 
-print(contents)
+def mark_as_done():
+    with open("to_do_list/main.txt", "a+", newline="") as file:
+        to_be_marked = input('Which task do you want to replace?: ').lower().strip()
+        task_list = file.read()
+        marked_list = []
+        for item in task_list:
+            if item in to_be_marked:
+                marked_list.append(item)
+
+        if len(marked_list) == 0:
+            print(f'{to_be_marked} not found.')
+        elif len(marked_list) == 1:
+mark_as_done()
+       
+
+with open("to_do_list/main.txt", "r", newline="") as file:
+    contents = file.read()
+    print(contents)
