@@ -28,12 +28,20 @@ def mark_as_done():
         task_list = file.read()
         marked_list = []
         for item in task_list:
-            if item in to_be_marked:
+            if to_be_marked in item:
                 marked_list.append(item)
 
         if len(marked_list) == 0:
             print(f'{to_be_marked} not found.')
         elif len(marked_list) == 1:
+            r_u_sure = input(f'Are you sure you want to mark {marked_list} as done? (y or n): ').lower().strip()
+            if r_u_sure == 'y':
+                item = marked_list
+            elif r_u_sure == 'n':
+                print('Ok')
+            else:
+                print('Incorrect option. I will assume you are saying no.')
+
 mark_as_done()
        
 
