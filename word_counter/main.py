@@ -3,7 +3,7 @@
 from text_add import text_add
 from word_counter import word_counter
 from display_file import display_file
-from clear_file import 
+from clear_file import clear_file
 
 def main():
     while True:
@@ -24,7 +24,8 @@ def main():
         elif choice == '3':
             print(word_counter())
         elif choice == '4':
-
+            clear_file()
+            print('Successfully cleared file.')
         elif choice == '5':
             print('\nThanks for using this. Have a good day.')
             break
