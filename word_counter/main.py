@@ -3,17 +3,17 @@
 from text_add import text_add
 from word_counter import word_counter
 from display_file import display_file
+from clear_file import 
 
 def main():
-    with open("word_counter/main_text.txt", "w") as file:
-        file.write("")
     while True:
         choice = input("""\nWhich one would you like to do?:
                     
 1. Display the current text file
 2. Add to the text file
 3. Find the word count of the text file
-4. Exit the program
+4. Reset the file
+5. Exit the program
                 
 (1, 2, 3, or 4): """)
         
@@ -24,6 +24,8 @@ def main():
         elif choice == '3':
             print(word_counter())
         elif choice == '4':
+
+        elif choice == '5':
             print('\nThanks for using this. Have a good day.')
             break
         else:
