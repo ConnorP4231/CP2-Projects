@@ -5,6 +5,8 @@ from word_counter import word_counter
 from display_file import display_file
 
 def main():
+    with open("word_counter/main_text.txt", "w") as file:
+        file.write("")
     while True:
         choice = input("""\nWhich one would you like to do?:
                     
