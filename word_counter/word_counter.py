@@ -1,14 +1,15 @@
 # Connor Pavicic, word_counter
 
+from time_handling import format_time #Imports the time from time file.
+
 def word_counter():
-    with open("word_counter/main_text.txt", "r") as file:
-        text = file.read()
-        count = len(text.split())
+    with open("word_counter/main_text.txt", "r+") as file: #Opens the file
+        text = file.read() #Reads it
+        count = len(text.split()) #Finds the word count
 
         if count == 0:
-            return "\nThere are no words in the document."
+            file.write(f'\nWord Count Last Checked at: {format_time}.') #It still updates the time.
+            return "\nThere are no words in the document." #If the word count is 0 then it returns that there is nothing.
         else:
-            return f"\nWord Count Including Date: {count}. \nWord Count Excluding Date: {count-2}"
-
-
-word_counter()
+            file.write(f'\nWord Count Last Checked at: {format_time}.') #Updates time
+            return f"\nWord Count: {count}." #Prints word count
