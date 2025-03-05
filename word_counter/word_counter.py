@@ -1,6 +1,7 @@
 # Connor Pavicic, word_counter
 
 from time_handling import format_time #Imports the time from time file.
+from file_handling import
 
 def word_counter():
     with open("word_counter/main_text.txt", "r+") as file: #Opens the file
