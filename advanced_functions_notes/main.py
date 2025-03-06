@@ -78,8 +78,6 @@ utilities = user_inputs("utilities")
 groceries = user_inputs("groceries")
 transportation = user_inputs("transportation")
 
-start = 
-
 
 
 # 7. Why do we write closure functions?
@@ -87,4 +85,4 @@ start =
 # 8. What is recursion?
 #   When you call a function inside of itself.
 # 9. How does recursion work?
-#   
+#   You put a function in a function.
