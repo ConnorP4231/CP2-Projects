@@ -1,6 +1,4 @@
-name,health,strength,defense,speed
-Locklin James Sheldon,3,5000,5000,28
-Cornelius,4000,4000,5000,28
-Pedro,90,100,40,100
-skibidi toilet,100,5,23,1
-lebonbon james,100,5,23,24
+Name - Health,Strength,Defense,Speed
+Name - Locklin James Sheldon:,Health: 3,Strength: 5000,Defense: 5000,Speed: 28
+Name - Cornelius:,Health: 4000,Strength: 4000,Defense: 5000,Speed: 28
+Name - Pedro:,Health: 90,Strength: 100,Defense: 40,Speed: 100
