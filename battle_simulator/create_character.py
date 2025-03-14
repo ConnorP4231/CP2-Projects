@@ -1,48 +1,36 @@
 import csv
 
 def create_character():
-    with open(r"battle_simulator\characters.csv", "a") as file:
-        name = input('What is the name of your character?: ')
-        
+    """Creates a new character and saves it to a CSV file."""
+    name = input("What is the name of your character?: ")
+
+    def get_stat(stat_name):
+        """Inner function to get a valid stat between 1-100."""
         while True:
             try:
-                health = int(input('What is your character\'s health? (1-100): '))
-                if 1 <= health <= 100:
-                    break
+                value = int(input(f"What is your character's {stat_name}? (1-100): "))
+                if 1 <= value <= 100:
+                    return value
                 else:
-                    print("Health must be between 1 and 100.")
+                    print("Value must be between 1 and 100.")
             except ValueError:
-                print("Please enter a valid number for health.")
-        
-        while True:
-            try:
-                strength = int(input('What is the strength of your character? (1-100): '))
-                if 1 <= strength <= 100:
-                    break
-                else:
-                    print("Strength must be between 1 and 100.")
-            except ValueError:
-                print("Please enter a valid number for strength.")
-        
-        while True:
-            try:
-                defense = int(input('What is the defense of your character? (1-100): '))
-                if 1 <= defense <= 100:
-                    break
-                else:
-                    print("Defense must be between 1 and 100.")
-            except ValueError:
-                print("Please enter a valid number for defense.")
-        
-        while True:
-            try:
-                speed = int(input('What is the speed of your character? (1-100): '))
-                if 1 <= speed <= 100:
-                    break
-                else:
-                    print("Speed must be between 1 and 100.")
-            except ValueError:
-                print("Please enter a valid number for speed.")
-        
-        # Write character data to file
-        file.write(f'\n{name},{health},{strength},{defense},{speed}')
+                print("Please enter a valid number.")
+
+    def save_character(name, health, strength, defense, speed):
+        """Inner function to save character data to the CSV file."""
+        with open("battle_simulator/characters.csv", "a", newline="") as file:
+            writer = csv.writer(file)
+            # Remove the extra newline \n from the string
+            formatted_string = f"Name - {name}:,Health: {health},Strength: {strength},Defense: {defense},Speed: {speed}"
+            writer.writerow([formatted_string])  # Writing as a single cell row
+
+    # Call the functions to get actual values (previously, the function objects were stored instead)
+    health = get_stat("health")
+    strength = get_stat("strength")
+    defense = get_stat("defense")
+    speed = get_stat("speed")
+
+    # Save character using the inner function
+    save_character(name, health, strength, defense, speed)
+
+    return f"Character {name} has been created successfully!"
