@@ -1,10 +1,15 @@
 import csv
+import matplotlib.pyplot as plt
+
+battles = 0
+xp_values = []
+battles_values = []
 
 def parse_stat(stat_str):
     """Extracts the numeric part from a stat string like 'Health: 90'."""
     return int(stat_str.split(":")[1].strip())  # Extract the part after 'Health: ', 'Strength: ', etc.
 
-def battle():
+def battle(battles = battles, xp_values = xp_values, battles_values = battles_values):
     """Simulate a battle between the user's character and the computer's character based on their stats."""
     
     # Load the battle data from battle_data.csv
@@ -39,6 +44,7 @@ def battle():
         computer_speed = parse_stat(computer_data[4])
     
     # Print the stats of the characters
+    battles += 1
     print(f"\nBattle begins between {user_name} and {computer_name}!")
     print(f"{user_name} Stats - Health: {user_health}, Strength: {user_strength}, Defense: {user_defense}, Speed: {user_speed}")
     print(f"{computer_name} Stats - Health: {computer_health}, Strength: {computer_strength}, Defense: {computer_defense}, Speed: {computer_speed}")
@@ -59,5 +65,22 @@ def battle():
         # Return the total XP gained
         print(f'You won and gained 5 XP! You now have a total of {total_XP} XP.')
 
+        xp_values.append(total_XP)
+        battles_values.append(battles)
+
     elif computer_points > user_points:
         print('Computer won!')
+    else:
+        print('It is a tie!')
+
+
+def line_graph():
+    if not xp_values or not battles_values:
+        print('There is no data to plot.')
+        return
+    else:
+        plt.plot(xp_values, battles_values)
+        plt.title('XP Line Graph:')
+        plt.xlabel('Battles')
+        plt.ylabel('XP')
+        plt.show()
