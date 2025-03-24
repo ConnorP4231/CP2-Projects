@@ -5,6 +5,7 @@ from choose_character import choose_character
 from battle import battle
 from bar_graph import bar_graph
 from battle import line_graph
+from data_frame import data_frame
 
 def main(): # Main function
     with open("battle_simulator/points.txt", "w") as file: # Resets the points
@@ -16,7 +17,7 @@ def main(): # Main function
     xp_values = []
     
     while True:
-        choice = input('Which one would you like to do?: \n\n1. Battle the computer\n2. Create a character\n3. Display the characters\n4. Look at a character\'s bar graph\n5. Look at your XP line graph\n6. Exit the program\n\n(1-6): ')
+        choice = input('Which one would you like to do?: \n\n1. Battle the computer\n2. Create a character\n3. Display the characters\n4. Look at a character\'s bar graph\n5. Look at your XP line graph\n6. Look at a data frame for all the characters\n7. Exit the program\n\n(1-6): ')
         if choice == '1':
             choose_character()  # Choose a character for the battle
             # Pass the variables and get the updated ones from the battle
@@ -32,6 +33,8 @@ def main(): # Main function
         elif choice == '5':
             line_graph(battles_values, xp_values)
         elif choice == '6':
+            data_frame()
+        elif choice == '7':
             print('Thanks for using the program.')
             break
         else:
