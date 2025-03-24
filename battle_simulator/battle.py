@@ -1,15 +1,11 @@
 import csv
 import matplotlib.pyplot as plt
 
-battles = 0
-xp_values = []
-battles_values = []
-
 def parse_stat(stat_str):
     """Extracts the numeric part from a stat string like 'Health: 90'."""
     return int(stat_str.split(":")[1].strip())  # Extract the part after 'Health: ', 'Strength: ', etc.
 
-def battle(battles = battles, xp_values = xp_values, battles_values = battles_values):
+def battle(battles, xp_values, battles_values):
     """Simulate a battle between the user's character and the computer's character based on their stats."""
     
     # Load the battle data from battle_data.csv
@@ -25,9 +21,9 @@ def battle(battles = battles, xp_values = xp_values, battles_values = battles_va
         print(f"\nUser data: {user_data}")
         print(f"Computer data: {computer_data}")
         
-        if len(user_data) < 5 or len(computer_data) < 5: #makes sure that all values are correct.
+        if len(user_data) < 5 or len(computer_data) < 5:  # Makes sure that all values are correct.
             print("Error: One of the character rows is missing data. Make sure there are 5 elements per row.")
-            return
+            return battles, xp_values, battles_values
         
         # Extract user stats
         user_name = user_data[0]
@@ -49,14 +45,14 @@ def battle(battles = battles, xp_values = xp_values, battles_values = battles_va
     print(f"{user_name} Stats - Health: {user_health}, Strength: {user_strength}, Defense: {user_defense}, Speed: {user_speed}")
     print(f"{computer_name} Stats - Health: {computer_health}, Strength: {computer_strength}, Defense: {computer_defense}, Speed: {computer_speed}")
 
-    user_points = user_health + user_strength + user_defense + user_speed #User stats added together
-    computer_points = computer_health + computer_strength + computer_defense + computer_speed #Computer stats added together.
+    user_points = user_health + user_strength + user_defense + user_speed  # User stats added together
+    computer_points = computer_health + computer_strength + computer_defense + computer_speed  # Computer stats added together.
 
-    if user_points > computer_points: #Sees which one has higher points.
+    if user_points > computer_points:  # Sees which one has higher points.
         with open("battle_simulator/points.txt", "r+") as file:
             # Read the current XP value from the file (assuming it's a single integer)
             XP = int(file.read().strip())  # Convert the string to an integer
-            total_XP = XP + 5 #Adds 5 XP when the user wins.
+            total_XP = XP + 5  # Adds 5 XP when the user wins.
             
             # Go back to the start of the file to overwrite the value
             file.seek(0)
@@ -72,15 +68,18 @@ def battle(battles = battles, xp_values = xp_values, battles_values = battles_va
         print('Computer won!')
     else:
         print('It is a tie!')
+    
+    return battles, xp_values, battles_values
 
 
-def line_graph():
+def line_graph(battles_values, xp_values):
     if not xp_values or not battles_values:
         print('There is no data to plot.')
         return
     else:
-        plt.plot(xp_values, battles_values)
+        plt.plot(battles_values, xp_values)
         plt.title('XP Line Graph:')
         plt.xlabel('Battles')
         plt.ylabel('XP')
+        plt.grid(True)
         plt.show()
