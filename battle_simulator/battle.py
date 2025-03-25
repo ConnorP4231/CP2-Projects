@@ -61,7 +61,7 @@ def battle(battles, xp_values, battles_values):
         # Return the total XP gained
         print(f'You won and gained 5 XP! You now have a total of {total_XP} XP.')
 
-        xp_values.append(total_XP)
+        xp_values.append(total_XP) #Appends everything to a list for the line graph.
         battles_values.append(battles)
 
     elif computer_points > user_points:
@@ -72,11 +72,12 @@ def battle(battles, xp_values, battles_values):
     return battles, xp_values, battles_values
 
 
-def line_graph(battles_values, xp_values):
-    if not xp_values or not battles_values:
+def line_graph(battles_values, xp_values): #Line graph function
+    if not xp_values or not battles_values: #If there isn't anything in the lists
         print('There is no data to plot.')
         return
     else:
+        #Plots the points, then labels everything and then finally displays the graph.
         plt.plot(battles_values, xp_values)
         plt.title('XP Line Graph:')
         plt.xlabel('Battles')

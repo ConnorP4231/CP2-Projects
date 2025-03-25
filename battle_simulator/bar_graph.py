@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 
-def bar_graph():
+def bar_graph(): #Bar graph function
     with open("battle_simulator/characters.csv", "r", newline="") as file:
             reader = csv.reader(file)
             characters = [row for row in reader if row]  # Skip empty lines
@@ -24,7 +24,7 @@ def bar_graph():
                         row = characters[chosen_number]
                         print(f"\nYou selected {row[0]}!")
                         print(f"Stats - Health: {row[1]}, Strength: {row[2]}, Defense: {row[3]}, Speed: {row[4]}")
-                        user_character = row
+                        #Gets all the data to be used later
                         user_name = row[0].replace("Name - ", "").strip()
                         health = int(row[1].replace("Health: ", "").strip())
                         strength = int(row[2].replace("Strength: ", "").strip())
@@ -38,13 +38,14 @@ def bar_graph():
                     print("Invalid input. Please enter a valid number.")
 
 
-    categories = ['Health', 'Strength', 'Defense', 'Speed']  
-    values = [health, strength, defense, speed]  
+    categories = ['Health', 'Strength', 'Defense', 'Speed'] #Labeling 
+    values = [health, strength, defense, speed]  #The actual values being used
 
-    plt.bar(categories, values)  
+    plt.bar(categories, values)  #Plots the stuff
 
+    #Labeling
     plt.xlabel('Categories')  
     plt.ylabel('Values')  
     plt.title(f'{user_name} Statistics Bar Graph:')  
 
-    plt.show()
+    plt.show() #Shows the graph
