@@ -2,7 +2,7 @@ import csv
 import random
 
 def save_battle_data(user_character, computer_choice):
-    """Saves the selected characters and their stats to a battle_data.csv file."""
+    #Saves the selected characters and their stats to a battle_data.csv file.
     with open("battle_simulator/battle_data.csv", "w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(["Character", "Name", "Health", "Strength", "Defense", "Speed"])
@@ -16,7 +16,7 @@ def save_battle_data(user_character, computer_choice):
     print("\nCharacter data saved to battle_data.csv")
 
 def choose_character():
-    """Allows the user to choose a character based on its number from a numbered list, and allows the computer to pick one randomly."""
+    #Allows the user to choose a character based on its number from a numbered list, and allows the computer to pick one randomly.
     file_path = "battle_simulator/characters.csv"
 
     with open(file_path, "r", newline="", encoding="utf-8") as file:

@@ -2,11 +2,11 @@ import csv
 import matplotlib.pyplot as plt
 
 def parse_stat(stat_str):
-    """Extracts the numeric part from a stat string like 'Health: 90'."""
+    #Extracts the numeric part from a stat string like 'Health: 90'.
     return int(stat_str.split(":")[1].strip())  # Extract the part after 'Health: ', 'Strength: ', etc.
 
 def battle(battles, xp_values, battles_values):
-    """Simulate a battle between the user's character and the computer's character based on their stats."""
+    #Simulate a battle between the user's character and the computer's character based on their stats.
     
     # Load the battle data from battle_data.csv
     with open("battle_simulator/battle_data.csv", "r", newline="") as file:
