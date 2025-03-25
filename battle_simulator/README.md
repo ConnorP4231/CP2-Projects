@@ -36,7 +36,7 @@ Not used for this class
 
 ## Contributors
 ---
-+ Person who helped - what they did
++ Sawyer Wood - helped me write the README and gave me advice 
 + Person who helped - what they did
 + Person who helped - what they did
 + Person who helped - what they did
