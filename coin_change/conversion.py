@@ -52,6 +52,7 @@ def conversion():
         print(f"Currency Breakdown:") #Prints the list
         for item in all_types:
             print(item)
+        print(f'Amount of coins/bills: {len(all_types)}') #Displays how many coins/bills needed.
     
     def BR_conversion(BR): #Brazil function
         money_amnt = process_currency(BR) #Uses the process_currency helper function to do everything with BR.
@@ -77,6 +78,7 @@ def conversion():
         print(f"Currency Breakdown:") #Prints the list.
         for item in all_types:
             print(item)
+        print(f'Amount of coins/bills: {len(all_types)}') #Displays how many coins/bills needed.
 
     def NK_conversion(NK): #North Korea function.
         money_amnt = process_currency(NK) #Uses the process_currency helper function to do everything with NK.
@@ -102,6 +104,7 @@ def conversion():
         print(f"Currency Breakdown:") #Prints the list.
         for item in all_types:
             print(item)
+        print(f'Amount of coins/bills: {len(all_types)}') #Displays how many coins/bills needed.
     
     def UK_conversion(UK): #United Kingdom function.
         money_amnt = process_currency(UK) #Uses the process_currency helper function to do everything with UK.
@@ -127,6 +130,7 @@ def conversion():
         print(f"Currency Breakdown:") #Prints the list.
         for item in all_types:
             print(item)
+        print(f'Amount of coins/bills: {len(all_types)}') #Displays how many coins/bills needed.
 
     def Robux_conversion(Robux): #Roblox robux function.
         money_amnt = process_currency(Robux) #Uses the process_currency helper function to do everything with UK.
@@ -152,17 +156,26 @@ def conversion():
         print(f"Currency Breakdown:") #Prints the list.
         for item in all_types:
             print(item)
+        print(f'Amount of coins/bills: {len(all_types)}') #Displays how many coins/bills needed.
 
     #Depending on what country the user chose, it does that country function.
-    if country == '1':
-        US_conversion(US)
-    elif country == '2':
-        BR_conversion(BR)
-    elif country == '3':
-        NK_conversion(NK)
-    elif country == '4':
-        UK_conversion(UK)
-    elif country == '5':
-        Robux_conversion(Robux)
+    while True:
+        if country == '1':
+            US_conversion(US)
+            break
+        elif country == '2':
+            BR_conversion(BR)
+            break
+        elif country == '3':
+            NK_conversion(NK)
+            break
+        elif country == '4':
+            UK_conversion(UK)
+            break
+        elif country == '5':
+            Robux_conversion(Robux)
+            break
+        else:
+            print('Incorrect option, try again.')
 
 conversion()
