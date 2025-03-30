@@ -177,5 +177,3 @@ def conversion():
             break
         else:
             print('Incorrect option, try again.')
-
-conversion()
