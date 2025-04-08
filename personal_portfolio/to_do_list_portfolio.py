@@ -7,7 +7,7 @@ Add items to the to do list
 Mark item as complete
 Delete item from to do list"""
 
-file_path = "personal_portfolio/to_do_list.txt" #Puts the file name in a variable instead of writing it out each time.
+file_path = "personal_portfolio/to_do_list_text_portfolio.txt" #Puts the file name in a variable instead of writing it out each time.
 
 def add_item(): #function for adding a new item.
     """Adds a new task to the to-do list"""

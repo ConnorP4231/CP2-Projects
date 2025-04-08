@@ -1,14 +1,5 @@
 import random #Gets random
 
-# Gets the password length from the user
-while True:
-    try:
-        pass_length = int(input('How many characters do you want your password to be?: '))
-        break
-    except ValueError: #makes sure that it is an int.
-        print('That is not a correct input. Please enter a valid integer.')
-
-
 # Collects user inputs for character counts
 def get_user_inputs(pass_length):
     while True:
@@ -103,9 +94,18 @@ def generate_password(pass_length, num_upper, num_lower, num_num, special_num):
     return ''.join(password) #Returns it
 
 
-#Gets 4 different outputs for the same requirements and prints them.
-num_upper, num_lower, num_num, special_num = get_user_inputs(pass_length)
+def password_main():
+    # Gets the password length from the user
+    while True:
+        try:
+            pass_length = int(input('How many characters do you want your password to be?: '))
+            break
+        except ValueError: #makes sure that it is an int.
+            print('That is not a correct input. Please enter a valid integer.')
 
-print("\nHere are your generated passwords:")
-for i in range(4):
-    print(f"Password {i + 1}: {generate_password(pass_length, num_upper, num_lower, num_num, special_num)}")
+    #Gets 4 different outputs for the same requirements and prints them.
+    num_upper, num_lower, num_num, special_num = get_user_inputs(pass_length)
+
+    print("\nHere are your generated passwords:")
+    for i in range(4):
+        print(f"Password {i + 1}: {generate_password(pass_length, num_upper, num_lower, num_num, special_num)}")

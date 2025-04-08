@@ -3,7 +3,7 @@
 import csv #imports csv
 
 def title_search(): #function of searching for a movie name.
-    with open("movie_recommender/Movies_list.csv", newline='') as file: #gets the csv file
+    with open("personal_portfolio/Movies_list_portfolio.csv", newline='') as file: #gets the csv file
         movieCSV = csv.reader(file)
         next(movieCSV, None) #skips the next line so it doesn't print what each category is.
         search = input('Enter a movie to search for: ').strip().lower()
@@ -19,7 +19,7 @@ def title_search(): #function of searching for a movie name.
             print('Movie not found.')
 
 def director_search(): #function for director search (does the same thing as last function but with different lines)
-    with open("movie_recommender/Movies_list.csv", newline='') as file:
+    with open("personal_portfolio/Movies_list_portfolio.csv", newline='') as file:
         movieCSV = csv.reader(file)
         next(movieCSV, None)
         search = input('Enter a director to search for: ').strip().lower()
@@ -38,7 +38,7 @@ def director_search(): #function for director search (does the same thing as las
             print('Director not found.')
 
 def genre_search(): #the function for searching for a genre. (does the same thing as the last 2 but with different lines).
-    with open("movie_recommender/Movies_list.csv", newline='') as file:
+    with open("personal_portfolio/Movies_list_portfolio.csv", newline='') as file:
         movieCSV = csv.reader(file)
         next(movieCSV, None)
         search = input('Enter a genre to search for: ').strip().lower()
@@ -57,7 +57,7 @@ def genre_search(): #the function for searching for a genre. (does the same thin
             print('Genre not found.')
 
 def filter_both(): #the function for filtering both genre and director. (does the same thing as last functions but use both genre and director in the for loop when searching through each line.
-    with open("movie_recommender/Movies_list.csv", newline='') as file:
+    with open("personal_portfolio/Movies_list_portfolio.csv", newline='') as file:
         movieCSV = csv.reader(file)
         next(movieCSV, None)
         director_search = input('Enter a director to search for: ').strip().lower()
@@ -77,7 +77,7 @@ def filter_both(): #the function for filtering both genre and director. (does th
             print('No matching movies found.')
 
 def display_all_movies(): #This is the function for printing all the movies.
-    with open("movie_recommender/Movies_list.csv", newline='') as file:
+    with open("personal_portfolio/Movies_list_portfolio.csv", newline='') as file:
         movieCSV = csv.reader(file)
         next(movieCSV, None)
         
