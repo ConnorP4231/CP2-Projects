@@ -2,9 +2,6 @@ from datetime import datetime
 
 # Connor Pavicic, personal_library
 
-print("""This is a program where you can add and remove artists to a list. You can also search for them too.
-Currently, the list is empty, so do whatever you want.""")
-
 artists = {}  # Use a dictionary instead of a list
 
 def add_artist():  # Function to add artists
