@@ -73,7 +73,7 @@ def tip_calculator(): #Tip calculator function.
     print(f"Total amount (bill + tip): ${total:.2f}\n")
     # All this above prints the tips and the total bill amount.
 
-def main(): #The main function that makes everything work.
+def financial_main(): #The main function that makes everything work.
     #Main menu for the financial calculator.
     while True: # While loop for as many uses as they want.
         choice = input("""
@@ -105,5 +105,3 @@ Enter your choice (1-6): """)
         else:
             print("Invalid choice. Please select a valid option.\n")
             # Makes sure that the user actually input a correct option.
-
-main() # This runs the main function making everything else run.
