@@ -18,3 +18,18 @@ def get_location(ip_address=''):
 
 get_location()  # gets your own location
 # get_location("8.8.8.8")  # gets Google's public DNS location
+
+
+import os
+
+# Get the current logged-in user
+name = os.getlogin()
+
+formatted_name = name.replace('.', ' ').split()
+formatted_name[0] = formatted_name[0].capitalize()
+
+# Join the parts back together
+formatted_name = ' '.join(formatted_name)
+
+print(formatted_name)
+
