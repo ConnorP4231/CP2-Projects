@@ -1,22 +1,20 @@
-# import datetime  
-  
-# Get the current date  
-# current_date = datetime.datetime.now()  
-  
-# Get the day of the year  
-# day_of_year = current_date.timetuple().tm_yday  
-  
-# print(day_of_year) 
+import requests
 
-import matplotlib.pyplot as plt  
+def get_location(ip_address=''):
+    # Leave ip_address blank to get your own location
+    response = requests.get(f'https://ipinfo.io/{ip_address}/json')
+    
+    if response.status_code == 200:
+        data = response.json()
+        IP = data.get('ip')
+        City = data.get('city')
+        Region = data.get('region')
+        Country = data.get('country')
+        LatLong = data.get('loc')
 
-categories = ['A', 'B', 'C']  
-values = [10, 20, 15]  
+        print(f'How does it feel living in {City}, {Region}, {Country}. Your IP address is {IP} and your latitude and longitude is {LatLong}.')
+    else:
+        print("Failed to retrieve location")
 
-plt.bar(categories, values)  
-
-plt.xlabel('Categories')  
-plt.ylabel('Values')  
-plt.title('Bar Graph Example')  
-
-plt.show()  
+get_location()  # gets your own location
+# get_location("8.8.8.8")  # gets Google's public DNS location
