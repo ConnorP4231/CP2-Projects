@@ -11,8 +11,11 @@ def get_location(ip_address=''):
         Region = data.get('region')
         Country = data.get('country')
         LatLong = data.get('loc')
+        WiFi = data.get('org')
+        area_code = data.get('postal')
+        time_zone = data.get('timezone')
 
-        print(f'How does it feel living in {City}, {Region}, {Country}. Your IP address is {IP} and your latitude and longitude is {LatLong}.')
+        print(f'How does it feel living in {City}, {Region}, {Country}. Your IP address is {IP} and your latitude and longitude is {LatLong}. Your WiFi network is {WiFi} and your postal/area code is {area_code}. You are also in the {time_zone} time zone.')
     else:
         print("Failed to retrieve location")
 
