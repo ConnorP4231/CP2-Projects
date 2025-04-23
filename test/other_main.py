@@ -1,6 +1,7 @@
 import pandas as pd
 import pygame
 import math
+import os
 
 # Initialize pygame
 pygame.init()
@@ -14,47 +15,49 @@ pygame.display.set_caption("3D-Like Question Game")
 # Font setup
 font = pygame.font.Font(None, 36)
 
-# Camera angles in 3D space
-camera_angle_x = 0  # Up/Down rotation (around the X-axis)
-camera_angle_y = 0  # Left/Right rotation (around the Y-axis)
+# Camera angles
+camera_angle_x = 0
+camera_angle_y = 0
 
-# Rotation speed (in degrees per key press)
+# Rotation speed
 rotation_speed = 30
 
-# Function to rotate a point in 3D space and project it onto 2D screen
+# Function to rotate and project a 3D point onto 2D screen
 def rotate_3d(x, y, z, angle_x, angle_y):
-    # Convert angles to radians
     rad_x = math.radians(angle_x)
     rad_y = math.radians(angle_y)
 
-    # Rotate around the X-axis (up/down)
+    # Rotate around X-axis
     y_rot = y * math.cos(rad_x) - z * math.sin(rad_x)
     z_rot = y * math.sin(rad_x) + z * math.cos(rad_x)
 
-    # Rotate around the Y-axis (left/right)
+    # Rotate around Y-axis
     x_rot = x * math.cos(rad_y) + z_rot * math.sin(rad_y)
     z_rot = -x * math.sin(rad_y) + z_rot * math.cos(rad_y)
 
-    # Avoid division by zero by adding a small epsilon to z_rot
-    epsilon = 0.1  # Small value to prevent z_rot from becoming zero
-    if abs(z_rot) < epsilon:
-        print("Warning: z_rot is too small, setting z_rot to epsilon.")
-        z_rot = epsilon  # Prevent z_rot from being too close to zero
+    fov = 500
+    distance = 5
+    depth = z_rot + distance
 
-    # Project the 3D point onto 2D space
-    fov = 500  # Field of view (adjust for zoom level)
-    distance = 5  # Camera distance from the object
+    # 🧼 Don't draw if behind camera
+    if depth <= 0.1:
+        return None
+
     try:
-        x_projected = int((x_rot * fov) / (z_rot + distance) + screen_width // 2)
-        y_projected = int((y_rot * fov) / (z_rot + distance) + screen_height // 2)
+        x_projected = int((x_rot * fov) / depth + screen_width // 2)
+        y_projected = int((y_rot * fov) / depth + screen_height // 2)
+
+        # Clamp for safety
+        x_projected = max(-10000, min(10000, x_projected))
+        y_projected = max(-10000, min(10000, y_projected))
+
     except ZeroDivisionError:
-        print(f"Error: z_rot is zero, skipping projection.")
-        return screen_width // 2, screen_height // 2  # Return a default position if error occurs
+        return None
 
     return x_projected, y_projected
 
 def jumpscare():
-    print("Jumpscare!")
+    print("💀 BOO! Jumpscare!")
 
 def exit_game():
     print("Exiting the game...")
@@ -64,8 +67,14 @@ def exit_game():
 def question():
     global camera_angle_x, camera_angle_y
 
+    csv_path = 'test/questions.csv'
+    if not os.path.exists(csv_path):
+        print(f"CSV file not found at: {csv_path}")
+        pygame.time.wait(3000)
+        return
+
     try:
-        question_csv = pd.read_csv('test/questions.csv')
+        question_csv = pd.read_csv(csv_path)
     except Exception as e:
         print(f"Error loading CSV: {e}")
         pygame.time.wait(3000)
@@ -77,23 +86,24 @@ def question():
         user_input = ""
         answered = False
 
-        # Fixed position for the question in 3D space
         question_x = 0
         question_y = 0
-        question_z = 10  # Increase distance from the camera to avoid z_rot being too small
+        question_z = 10
 
         while not answered:
             screen.fill((0, 0, 0))
 
-            # Rotate the question and project its position onto the 2D screen
-            projected_x, projected_y = rotate_3d(question_x, question_y, question_z, camera_angle_x, camera_angle_y)
+            projected = rotate_3d(question_x, question_y, question_z, camera_angle_x, camera_angle_y)
 
-            # Render the question at the rotated position
-            question_surface = font.render(question_text, True, (255, 255, 255))
-            question_rect = question_surface.get_rect(center=(projected_x, projected_y))
-            screen.blit(question_surface, question_rect)
+            # 🛑 Skip rendering if behind the camera
+            if projected is not None:
+                projected_x, projected_y = projected
 
-            # Render user input
+                question_surface = font.render(question_text, True, (255, 255, 255))
+                question_rect = question_surface.get_rect(center=(projected_x, projected_y))
+                screen.blit(question_surface, question_rect)
+
+            # Always draw input so user can type
             input_surface = font.render(user_input, True, (255, 255, 255))
             input_rect = input_surface.get_rect(center=(screen_width // 2, screen_height // 2 + 50))
             screen.blit(input_surface, input_rect)
@@ -106,25 +116,19 @@ def question():
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
-                        camera_angle_y += rotation_speed  # Rotate clockwise (left arrow)
+                        camera_angle_y += rotation_speed
                     elif event.key == pygame.K_RIGHT:
-                        camera_angle_y -= rotation_speed  # Rotate counterclockwise (right arrow)
+                        camera_angle_y -= rotation_speed
                     elif event.key == pygame.K_UP:
-                        camera_angle_x -= rotation_speed  # Rotate up (up arrow)
+                        camera_angle_x -= rotation_speed
                     elif event.key == pygame.K_DOWN:
-                        camera_angle_x += rotation_speed  # Rotate down (down arrow)
+                        camera_angle_x += rotation_speed
 
-                    # Ensure camera_angle_y wraps around at 360 degrees to avoid overflow
+                    # Clamp angles
                     camera_angle_y = camera_angle_y % 360
+                    camera_angle_x = max(-90, min(90, camera_angle_x))
 
-                    # Limit camera_angle_x to prevent upside-down rotation
-                    if camera_angle_x > 45:  # Limit the vertical rotation to 45 degrees
-                        camera_angle_x = 45
-                    elif camera_angle_x < -45:  # Limit the vertical rotation to -45 degrees
-                        camera_angle_x = -45
-
-                    # Handle user input for answering the question
-                    elif event.key == pygame.K_RETURN:
+                    if event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
                         if user_input.strip().lower() == correct_answer:
                             response_surface = font.render("Correct!", True, (0, 255, 0))
                             response_rect = response_surface.get_rect(center=(screen_width // 2, screen_height // 2 + 100))
@@ -132,7 +136,6 @@ def question():
                             pygame.display.update()
                             pygame.time.wait(1000)
 
-                            # Check for flags (like jumpscare and exit)
                             if str(row.get('exit', False)).lower() == 'true':
                                 exit_game()
                             elif str(row.get('jumpscare', False)).lower() == 'true':
@@ -140,12 +143,17 @@ def question():
 
                             answered = True
                         else:
+                            response_surface = font.render("Wrong!", True, (255, 0, 0))
+                            response_rect = response_surface.get_rect(center=(screen_width // 2, screen_height // 2 + 100))
+                            screen.blit(response_surface, response_rect)
+                            pygame.display.update()
+                            pygame.time.wait(1000)
                             user_input = ""
 
                     elif event.key == pygame.K_BACKSPACE:
                         user_input = user_input[:-1]
-                    else:
+                    elif event.unicode.isprintable():
                         user_input += event.unicode
 
-# 🟢 Start the game
+# Run it
 question()
